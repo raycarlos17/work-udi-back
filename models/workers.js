@@ -25,13 +25,13 @@ const workersModel = new Schema(
             type: String,
             required: false
         },
-        id: {
+        _id: {
             type: String,
             unique: true,
             required: true,
             collection: 'workers'
         }
-    }
+    }, { _id: false, collection: 'workers' }
 );
 
 module.exports = mongoose.model('workers', workersModel); 

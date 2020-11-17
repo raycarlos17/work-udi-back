@@ -6,7 +6,7 @@ async function cadastraWorker(req, res, next) {
 
     let resultadoBancoEmail = await workersModel.findOne({"email": req.body.email});
     let resultadoBancoContact = await workersModel.findOne({"contact": req.body.contact});;
-    let resultadoBancoId = await workersModel.findOne({"id": req.body.id});
+    let resultadoBancoId = await workersModel.findOne({"_id": req.body.id});
 
     try{
         if(req.body.name === null || req.body.name === undefined || req.body.name === '' ||
@@ -56,10 +56,9 @@ async function dadosWorkers(req, res, next){
 }
 
 async function dadosWorker(req, res, next){
-    console.log(req.params.id)
 
     try{
-        const worker = await workersModel.findOne({"id": req.params.id})
+        const worker = await workersModel.findOne({"_id": req.params.id})
         console.log(worker)
         res.status(200).send(worker)
     }
