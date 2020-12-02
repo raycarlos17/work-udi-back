@@ -2,8 +2,6 @@ const workersModel = require('../models/workers');
 
 async function cadastraWorker(req, res, next) {
 
-    console.log(req.body)
-
     let resultadoBancoEmail = await workersModel.findOne({"email": req.body.email});
     let resultadoBancoContact = await workersModel.findOne({"contact": req.body.contact});;
     let resultadoBancoId = await workersModel.findOne({"_id": req.body.id});
@@ -32,7 +30,7 @@ async function cadastraWorker(req, res, next) {
             return
         }
         else{
-            workersModel.create(req.body)
+            await workersModel.create(req.body)
             req.body['statusCadastraWorker'] = 'sucesso'
             next()
             return;
@@ -58,8 +56,7 @@ async function dadosWorkers(req, res, next){
 async function dadosWorker(req, res, next){
 
     try{
-        const worker = await workersModel.findOne({"_id": req.params.id})
-        console.log(worker)
+        const worker = await workersModel.findOne({"id": req.params.id})
         res.status(200).send(worker)
     }
     catch(error){

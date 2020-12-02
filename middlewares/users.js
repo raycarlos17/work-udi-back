@@ -6,7 +6,7 @@ const validaCpf = require('@fnando/cpf');
 
 async function cadastraUser(req, res, next){
 
-    const cpf = validaCpf.isValid(req.body.cpf)
+    const cpf = validaCpf.isValid(req.body.cpf)    
 
     if(req.body.name === null || req.body.name === undefined || req.body.name === '' ||
         req.body.email === null || req.body.email === undefined || req.body.email === '' ||
@@ -43,12 +43,12 @@ async function cadastraUser(req, res, next){
                 return
             }
             else{
-
                 const hash = await bcrypt.hash(req.body.password, 10)
                 req.body.password = hash
                 const formatCpf = validaCpf.strip(req.body.cpf)
-                req.body.cpf = formatCpf
-                userModel.create(req.body);
+                req.body.cpf = formatCpf;
+                console.log(req.body);
+                await userModel.create(req.body);
                 req.body['statusCadastraUser'] = 'sucesso'
                 next()
                 return;
@@ -61,6 +61,7 @@ async function cadastraUser(req, res, next){
 }
 
 async function loginUser(req, res, next){
+    console.log("cheguei aqui");
     let resultadoBanco;
     try{
         resultadoBanco = await userModel.findOne({"email": req.body.email});
