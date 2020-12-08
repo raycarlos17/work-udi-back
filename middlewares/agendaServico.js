@@ -5,9 +5,10 @@ async function agendaServico(req, res, next) {
 
   let resultadoBancoId = await agendaServicoModel.findOne({"id": req.body.id});
   let resultadoBancoData = await agendaServicoModel.findOne({"data": req.body.data});
+  let resultadoBanco = await agendaServicoModel.findOne({"id": req.body.id, "data": req.body.data});
   
   try{
-    if(resultadoBancoId && resultadoBancoData){
+    if(resultadoBanco){
       req.body['statusRegistraServico'] = 'dataOcupada'
       res.status(400).send({"Message": `A data ${req.body.data} já está ocupada`, "respostaAgendamento": 'dataOcupada'})
       //next()
